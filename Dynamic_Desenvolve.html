@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciativas</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --blue-pure: #0000FF;
+      --blue-mid: #1E90FF;
+      --blue-light: #ADD8E6;
+      --blue-steel: #B0C4DE;
+      --white: #FFFFFF;
+      --bg-dark: #050518;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--white);
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* HOME */
+    #home {
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #070730 60%, #0a0a50 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 60px 80px;
+    }
+
+    #home.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(30,144,255,0.18) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    #home::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15%;
+      bottom: 15%;
+      width: 5px;
+      background: linear-gradient(to bottom, transparent, var(--blue-pure), var(--blue-mid), transparent);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .slide-1-title {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      z-index: 1;
+    }
+
+    .slide-1-title .highlight {
+      background: linear-gradient(90deg, var(--blue-pure), var(--blue-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-1-subtitle {
+      margin-top: 24px;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--blue-steel);
+      max-width: 520px;
+      line-height: 1.7;
+      z-index: 1;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 56px;
+      z-index: 1;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-number {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      color: var(--blue-mid);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue-steel);
+      margin-top: 6px;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: rgba(176,196,222,0.25);
+      align-self: stretch;
+    }
+
+    .cta-btn {
+      margin-top: 56px;
+      padding: 16px 40px;
+      background: var(--blue-pure);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 32px rgba(0,0,255,0.35);
+      z-index: 1;
+    }
+
+    .cta-btn:hover {
+      background: var(--blue-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 40px rgba(30,144,255,0.5);
+    }
+
+    /* INICIATIVAS */
+    .initiatives {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #eaf1ff 100%);
+      color: #333;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .initiatives.active {
+      display: flex;
+    }
+
+    .initiatives h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.7rem;
+      color: #1a2a6c;
+      text-align: center;
+    }
+
+    .initiatives-subtitle {
+      color: #5f6b7a;
+      margin-bottom: 3rem;
+      text-align: center;
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    .postit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 1.6rem;
+      max-width: 1280px;
+      width: 100%;
+    }
+
+    .postit {
+      position: relative;
+      min-height: 210px;
+      padding: 2rem 1.4rem 1.5rem;
+      border-radius: 14px;
+      background: #dbeafe;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.13);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+      color: #263238;
+      transform: rotate(-1deg);
+    }
+
+    .postit:nth-child(even) {
+      transform: rotate(1deg);
+    }
+
+    .postit:hover {
+      transform: translateY(-8px) rotate(0deg);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.18);
+    }
+
+.postit.interactive {
+  background: #053798;
+  color: #ffffff;
+  cursor: pointer;
+  border: 2px solid #0A4FCF;
+  outline: none;
+}
+.postit.interactive .postit-title{
+  color:#ffffff;
+}
+
+.postit.interactive .postit-pain{
+  color:rgba(255,255,255,0.92);
+}
+  .postit-tape {
+  background: rgba(255,255,255,0.88);
+}
+
+    .interactive-badge {
+  background: #ffffff;
+  color: #053798;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 5px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+}
+
+    .postit-title {
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #172033;
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.25;
+}
+
+    .postit-pain {
+      font-size: 0.92rem;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+.color-a,
+.color-b,
+.color-c,
+.color-d {
+  background: #E8F1FF;
+}
+
+    /* DETALHE */
+    .project-detail {
+      padding: 5rem 2rem;
+      background-color: #f0f4f8;
+      color: #333;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .project-detail.active {
+      display: flex;
+    }
+
+    .project-container {
+      max-width: 900px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 3rem;
+    }
+
+    .project-container h1 {
+      font-size: 2.5rem;
+      color: #1a2a6c;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .project-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .project-section h2 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0.5rem;
+    }
+
+    .project-section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    .video-card {
+      margin-top: 2rem;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .video-card iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+
+    .back-btn {
+      margin-top: 3rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #1a2a6c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .back-btn:hover {
+      background-color: #0d1b4d;
+    }
+
+
+
+    /* TELAS DE DEMONSTRAÇÃO */
+    .demo-screen,
+    .image-screen {
+      padding: 5rem 2rem;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8f9fa 0%, #eaf1ff 100%);
+      color: #333;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .demo-screen.active,
+    .image-screen.active {
+      display: flex;
+    }
+
+    .demo-screen h2,
+    .image-screen h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.7rem;
+      color: #1a2a6c;
+      text-align: center;
+    }
+
+    .demo-subtitle,
+    .image-subtitle {
+      color: #5f6b7a;
+      margin-bottom: 2rem;
+      text-align: center;
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    .big-play-card {
+      width: min(980px, 100%);
+      aspect-ratio: 16 / 9;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #050518 0%, #0a0a50 100%);
+      box-shadow: 0 18px 55px rgba(0,0,0,0.22);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 1px solid rgba(30,144,255,0.28);
+    }
+
+    .big-play-card video,
+    .big-play-card iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #020617;
+    }
+
+    .play-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 2px solid rgba(255,255,255,0.34);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+      box-shadow: 0 0 42px rgba(30,144,255,0.45);
+    }
+
+    .large-image-card {
+      width: min(980px, 100%);
+      border-radius: 28px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.18);
+    }
+
+    .large-image-card img {
+      width: 100%;
+      min-height: 520px;
+      object-fit: cover;
+      display: block;
+      background: #e5e7eb;
+    }
+
+    .screen-actions {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* MODAIS */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 5, 24, 0.76);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      padding: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      width: min(880px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #ffffff;
+      color: #172033;
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.35);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #172033;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .modal-eyebrow {
+      color: #1E90FF;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.8rem;
+    }
+
+    .modal-title {
+      color: #1a2a6c;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin-bottom: 1.8rem;
+      line-height: 1.15;
+    }
+
+    .modal-pain-block,
+    .modal-solution-block,
+    .modal-video-block {
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 1.3rem;
+      margin-bottom: 1.2rem;
+      background: #f8fafc;
+    }
+
+    .modal-pain-label,
+    .modal-solution-label,
+    .modal-video-label {
+      font-weight: 900;
+      color: #1a2a6c;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-pain-text,
+    .modal-solution-text {
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .video-wrapper video,
+    .video-wrapper iframe {
+      width: 100%;
+      max-height: 420px;
+      border-radius: 14px;
+      background: #020617;
+    }
+
+    .video-placeholder {
+      background: #eef2ff;
+      border-radius: 14px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .video-placeholder-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-tags {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .modal-tag {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+
+    /* EQUIPE */
+    .team-screen {
+      padding: 4rem 2rem;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8f9fa 0%, #eaf1ff 100%);
+      color: #333;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-screen.active {
+      display: flex;
+    }
+
+    .team-screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(30,144,255,0.11) 1px, transparent 1px);
+      background-size: 34px 34px;
+      pointer-events: none;
+    }
+
+    .team-screen h2 {
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      color: #1a2a6c;
+      margin-bottom: 0.8rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-subtitle {
+      color: #5f6b7a;
+      margin-bottom: 2.2rem;
+      text-align: center;
+      max-width: 720px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.2rem;
+      max-width: 1120px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      align-items: stretch;
+    }
+
+    .team-card {
+      width: 100%;
+      min-height: 235px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(30,144,255,0.13);
+      border-radius: 20px;
+      padding: 1.25rem 0.8rem;
+      text-align: center;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.13);
+    }
+
+    .team-avatar {
+      width: 132px;
+      height: 132px;
+      min-width: 132px;
+      min-height: 132px;
+      max-width: 132px;
+      max-height: 132px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 1rem auto;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      background: #e5e7eb;
+      flex: 0 0 132px;
+    }
+
+    .team-avatar img,
+    .team-photo {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      min-width: 100% !important;
+      min-height: 100% !important;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border: none;
+      margin: 0;
+      box-shadow: none;
+    }
+
+    .team-name {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #1a2a6c;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .team-role {
+      font-size: 0.82rem;
+      color: #6b7280;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 768px) {
+      #home {
+        padding: 40px 24px;
+      }
+
+      .stats-row {
+        gap: 24px;
+      }
+
+      .initiatives {
+        padding: 3rem 1rem;
+      }
+
+      .modal {
+        padding: 2rem 1.2rem;
+      }
+      .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+
+      .team-avatar {
+        width: 118px;
+        height: 118px;
+        min-width: 118px;
+        min-height: 118px;
+        max-width: 118px;
+        max-height: 118px;
+        flex-basis: 118px;
+      }
+    }
+  
+
+/* AJUSTE DA LOGO NA TELA INICIAL */
+.home-logo {
+  width: min(900px, 85vw);
+  max-width: 900px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ÚLTIMO SLIDE: imagem inteira, sem corte e sem afetar os demais slides */
+#image-screen {
+  width: 100vw;
+  height: 100vh;
+  padding: 0 !important;
+  margin: 0;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+#image-screen.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#image-screen .fullscreen-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+#image-screen .screen-actions {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 10;
+}
+
+</style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+
+<body>
+
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <img src="logo-dynamic-desenvolve-negativo.png"
+     alt="Dynamic Desenvolve"
+     class="home-logo">
+
+    <p class="slide-1-subtitle">
+      Um grupo de pessoas movidas por tecnologia, inovação, colaboração e vontade de construir coisas que importam.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-number">15</span>
+        <span class="stat-label">Projetos</span>
+      </div>
+
+      <div class="stat-divider"></div>
+
+      <div class="stat">
+        <span class="stat-number">2026</span>
+        <span class="stat-label">Ano</span>
+      </div>
+    </div>
+
+    <button class="cta-btn" onclick="goToPage('team-screen')">
+      Conheça as Iniciativas
+    </button>
+  </section>
+
+  <!-- EQUIPE -->
+  <section id="team-screen" class="page team-screen">
+    <h2>Conheça Nossa Equipe</h2>
+    <p class="team-subtitle">
+      Pessoas que transformam ideias em soluções, conectando tecnologia, inovação e colaboração.
+    </p>
+      
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar"><img src="eduardo.png" class="team-photo" alt="Foto do colaborador 1"></div>
+        <div class="team-name">Eduardo</div>
+        <div class="team-role">Financeiro</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar"><img src="felipe.png" class="team-photo" alt="Foto do colaborador 2"></div>
+        <div class="team-name">Felipe</div>
+        <div class="team-role">Financeiro</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar"><img src="gabi.png" class="team-photo" alt="Foto do colaborador 3"></div>
+        <div class="team-name">Gabrielle</div>
+        <div class="team-role">RH</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar"><img src="gustavo.png" class="team-photo" alt="Foto do colaborador 4"></div>
+        <div class="team-name">Gustavo</div>
+        <div class="team-role">Suporte</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar"><img src="heitor.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Heitor</div>
+        <div class="team-role">Operação</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar"><img src="kayo.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Kayo </div>
+        <div class="team-role">Suporte</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="luiza.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Luiza</div>
+        <div class="team-role">Suporte</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="nathalia.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Nathalia</div>
+        <div class="team-role">Suporte</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="raphael.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Raphael</div>
+        <div class="team-role">Eventos</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="thaiz.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Thaiz</div>
+        <div class="team-role">Eventos</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="yas.png" class="team-photo" alt="Foto do colaborador 5"></div>
+        <div class="team-name">Yasmin</div>
+        <div class="team-role">Marketing</div>
+      </div>
+    </div>
+
+    <div class="screen-actions">
+      <button class="back-btn" onclick="goToPage('home')">Voltar</button>
+      <button class="back-btn" onclick="goToPage('demo-screen-1')">Próxima Tela</button>
+    </div>
+  </section>
+
+  <!-- TELA DE DEMONSTRAÇÃO GRANDE 1 -->
+  <section id="demo-screen-1" class="page demo-screen">
+    
+    <div class="big-play-card">
+      <!-- Substitua o src pelo nome do seu vídeo, exemplo: <video src="meu-video.mp4" controls></video> -->
+      <video src="IMG_1569.MOV" controls></video>
+    </div>
+
+    <div class="screen-actions">
+      <button class="back-btn" onclick="goToPage('initiatives')">Próxima Tela</button>
+    </div>
+  </section>
+
+  <!-- INICIATIVAS -->
+  <section id="initiatives" class="page initiatives">
+    <h2>Nossos Projetos em Destaque</h2>
+    <p class="initiatives-subtitle">
+      Iniciativas criadas para automatizar processos, reduzir atividades manuais e ampliar a eficiência operacional.
+    </p>
+
+    <div class="postit-grid">
+
+      <div class="postit interactive" onclick="openModal('modal-1')">
+        <div class="postit-tape"></div>
+        <span class="interactive-badge">detalhes</span>
+        <div class="postit-title">Conciliação de Faturas</div>
+        <div class="postit-pain">Substituir lançamentos manuais em planilha pelo sistema do financeiro, automatizando a conciliação das faturas.</div>
+      </div>
+
+      <div class="postit color-a">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Agente Virtual de Captura de NF</div>
+        <div class="postit-pain">Automatizar a identificação de pendências de notas fiscais no Benner e o envio de cobranças automáticas aos hotéis.</div>
+      </div>
+
+      <div class="postit interactive" onclick="openModal('modal-2')">
+        <div class="postit-tape"></div>
+        <span class="interactive-badge">detalhes</span>
+        <div class="postit-title">Inventmic</div>
+        <div class="postit-pain">Controle de estoque de produtos, brindes e materiais da empresa.</div>
+      </div>
+
+      <div class="postit color-b">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Saas Service</div>
+        <div class="postit-pain">Dashboard de chamados e interações com potencial de comercialização, em estilo melhorado do Movedesk.</div>
+      </div>
+
+      <div class="postit color-d">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Onboarding de Clientes</div>
+        <div class="postit-pain">Painel de padronização de onboarding de novos clientes e colaboradores Dynamic.</div>
+      </div>
+
+      <div class="postit interactive" onclick="openModal('modal-3')">
+        <div class="postit-tape"></div>
+        <span class="interactive-badge">detalhes</span>
+        <div class="postit-title">Painel de Eventos</div>
+        <div class="postit-pain">Gerenciamento de tarefas e detalhes dos clientes de Eventos Dynamic.</div>
+      </div>
+
+      <div class="postit color-c">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Aprovações Online | Eventos</div>
+        <div class="postit-pain">Sistema de gerenciamento de aprovações online de eventos, sem mais planilhas.</div>
+      </div>
+
+      <div class="postit color-a">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Sistema de Envio de Vouchers | Eventos</div>
+        <div class="postit-pain">Envio automático de vouchers de eventos.</div>
+      </div>
+
+      <div class="postit interactive" onclick="openModal('modal-5')">
+        <div class="postit-tape"></div>
+        <span class="interactive-badge">detalhes</span>
+        <div class="postit-title">Dynamic Space</div>
+        <div class="postit-pain">Produto próprio Dynamic adaptado às necessidades da empresa e com custos reduzidos.</div>
+      </div>
+
+      <div class="postit color-b">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Agente de Vouchers</div>
+        <div class="postit-pain">Criação de vouchers em massa por meio de um modelo, para envio pelo sistema de vouchers.</div>
+      </div>
+
+      <div class="postit color-c">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Interface de Report e Gestão das Pendências</div>
+        <div class="postit-pain">Interface que facilita a visualização e os reports dos lançamentos do Financeiro.</div>
+      </div>
+
+      <div class="postit color-d">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Agente Execução de Tarefas</div>
+        <div class="postit-pain">Agente que possibilita otimização de tempo em processos extremamente manuais.</div>
+      </div>
+
+      <div class="postit interactive" onclick="openModal('modal-4')">
+        <div class="postit-tape"></div>
+        <span class="interactive-badge">detalhes</span>
+        <div class="postit-title">Claudionor</div>
+        <div class="postit-pain">Automatizar a identificação de pendências de notas fiscais no Benner e o envio de cobranças automáticas aos hotéis.</div>
+      </div>
+
+      <div class="postit color-a">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Agente | Busca de Notícias</div>
+        <div class="postit-pain">Reduzir atividade operacional e investir tempo em produção de conteúdo para redes e reposicionamento de marca.</div>
+      </div>
+
+      <div class="postit interactive" onclick="openModal('modal-7')">
+        <div class="postit-tape"></div>
+        <span class="interactive-badge">detalhes</span>
+        <div class="postit-title">Não voados</div>
+        <div class="postit-pain">Horas consumidas na verificação manual de informações de voos em portais de companhias aéreas e fornecedores</div>
+      </div>
+
+      <div class="postit color-b">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Vouchers</div>
+        <div class="postit-pain">reduz o trabalho manual de envio de vouchers</div>
+      </div>
+
+      <div class="postit color-c">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Sistema de aprovações | Eventos</div>
+        <div class="postit-pain">Aprovações dos clientes em plataforma/sistema ao invés de planilha.</div>
+      </div>
+
+      <div class="postit color-d">
+        <div class="postit-tape"></div>
+        <div class="postit-title">Agente de cobrança</div>
+        <div class="postit-pain">Agente de cobrança Stone com controle de débitos.</div>
+      </div>
+
+    </div>
+
+    <div class="screen-actions">
+      <button class="back-btn" onclick="goToPage('demo-screen-2')">Próxima</button>
+    </div>
+  </section>
+
+  <!-- TELA DE DEMONSTRAÇÃO GRANDE 2 -->
+  <section id="demo-screen-2" class="page demo-screen">
+
+    <div class="big-play-card">
+      <!-- Substitua o src pelo nome do seu vídeo, exemplo: <video src="meu-video-2.mp4" controls></video> -->
+      <video src="IMG_1551 (1).MOV" controls></video>
+    </div>
+
+    <div class="screen-actions">
+      <button class="back-btn" onclick="goToPage('image-screen')">Próxima Tela</button>
+    </div>
+  </section>
+
+  <!-- TELA FINAL COM IMAGEM GRANDE -->
+  
+<section id="image-screen" class="page image-screen">
+
+  <img src="teste-b-QR-Code.v2.jpg" alt="Imagem Final" class="fullscreen-image">
+
+  <div class="screen-actions">
+    <button class="back-btn" onclick="goToPage('demo-screen-2')">Voltar</button>
+    <button class="back-btn" onclick="goToPage('home')">Início</button>
+  </div>
+
+</section>
+
+
+  <!-- MODAL 1 -->
+  <div class="modal-overlay" id="modal-1">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-1')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">Conciliação de Faturas | Cartão Clara de NF</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Tempo excessivo dedicado ao cruzamento de informações de vendas para a conciliação do cartão corporativo.</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Melhor organização das informações, proporcionando maior clareza e agilidade nos processos de cobrança.</div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="CLARA.mp4" controls></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">Em andamento</span>
+        <span class="modal-tag">Alta prioridade</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2 -->
+  <div class="modal-overlay" id="modal-2">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-2')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">Inventmic</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Falta de gestão das saídas e entradas no estoque de produtos, materiais e brindes de marketing e RH, além dos colaboradores solicitarem itens por mensagem ou pessoalmente, inviabilizando rastreabilidade e organização.</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Com o Inventmic, o inventário fica atualizado em tempo real para gestão de itens das áreas, além de agora ser um sistema interativo para solicitação organizada de itens.  </div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="WhatsApp Video 2026-06-17 at 09.34.25.mp4"></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">MVP entregue</span>
+        <span class="modal-tag">Expansão</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3 -->
+  <div class="modal-overlay" id="modal-3">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-3')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">Painel de Eventos</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Tarefas repetitivas, análises manuais sujeitas a erro e falta de uma visão centralizada dos detalhes dos clientes de Eventos.</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Menos falhas e mais controle das etapas dos eventos. Melhor alinhamento entre Suporte, Operações e Comercial.Dados em tempo real para Gestão e apoio ao RH.</div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="Gravação - Painel de Eventos.mp4" controls></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">Piloto em desenvolvimento</span>
+        <span class="modal-tag">Inovação</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4 -->
+  <div class="modal-overlay" id="modal-4">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-4')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">EBTA</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Excesso de esforço operacional em tarefas repetitivas de cópia e colagem.</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Agente autônomo que opera em segundo plano, permitindo o direcionamento dos esforços da equipe para atividades de maior valor agregado.</div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="EBTA.mp4" controls></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">Automação</span>
+        <span class="modal-tag">Financeiro</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5 -->
+  <div class="modal-overlay" id="modal-5">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-5')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">Dynamic Space</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Não havia uma dor específica; havia a necessidade de ajustar orçamento e reduzir custos com solução própria.</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Produto próprio Dynamic adaptado às necessidades da empresa, com custos reduzidos e maior aderência ao processo interno.</div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="Dynamic Space.mp4" controls></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">MVP entregue</span>
+        <span class="modal-tag">Alta prioridade</span>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- MODAL 6 -->
+  <div class="modal-overlay" id="modal-6">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-6')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">Novo Projeto com Vídeo 1</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Substitua este texto pela dor do projeto.</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Substitua este texto pela solução proposta.</div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="NOVO-VIDEO-1.mp4" controls></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">Demo</span>
+        <span class="modal-tag">Novo projeto</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 7 -->
+  <div class="modal-overlay" id="modal-7">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal-7')">✕</button>
+      <div class="modal-eyebrow">✦ Projeto Destaque</div>
+      <h2 class="modal-title">NÃO VOADOS</h2>
+
+      <div class="modal-pain-block">
+        <div class="modal-pain-label">A dor</div>
+        <div class="modal-pain-text">Horas consumidas na verificação manual de informações de voos em portais de companhias aéreas e fornecedores</div>
+      </div>
+
+      <div class="modal-solution-block">
+        <div class="modal-solution-label">Como o projeto resolve</div>
+        <div class="modal-solution-text">Automação que atua em segundo plano, reduzindo a necessidade de intervenção manual e permitindo foco em outras atividades.</div>
+      </div>
+
+      <div class="modal-video-block">
+        <div class="modal-video-label">Demo em vídeo</div>
+        <div class="video-wrapper">
+          <video src="NÃO VOADOS.mp4" controls></video>
+        </div>
+      </div>
+
+      <div class="modal-tags">
+        <span class="modal-tag">Demo</span>
+        <span class="modal-tag">Novo projeto</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goToPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      const selectedPage = document.getElementById(pageId);
+
+      if (selectedPage) {
+        selectedPage.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(event) {
+        if (event.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+    });
+
+    window.onload = function() {
+      goToPage('home');
+    };
+  </script>
+
+</body>
+</html>
